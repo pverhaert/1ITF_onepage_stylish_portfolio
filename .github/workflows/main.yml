@@ -1,36 +1,13 @@
-# Go to "Settings" -> "Sectrets" and add two variables
-# FTP_USERNAME and FTP_PASSWORD: FTP credentials for your Sinners account
+name: Test HTML
+on: [push, pull_request]
 
-env:
-  LOCAL_DIR: dist                                 # Local directory to validate and deploy
-  REMOTE_DIR: r0xxxxxx/public_html/uitdaging1     # Directory to deploy the content of LOCAL_DIR
-  SKIP_VALIDATION: false                          # if false: deployment will be skipped if the HTML5 validator fails!
-
-name: Deploy Project to Sinners Hosting
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
 jobs:
   Deploy-To-Sinners:
-    name: Deploy-To-Sinners
+    name: Test HTML
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Validate HTML5
         uses: Cyb3r-Jak3/html5validator-action@v0.3
-        if: env.SKIP_VALIDATION == 'false'
         with:
           root: '${{env.LOCAL_DIR}}/'
-      - name: Deploy To Sinners
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        if: success()
-        env:
-          FTP_SERVER: sinners.be
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          METHOD: sftp
-          ARGS: --delete        # --delete arg will delete files on the server if you've deleted them in git
