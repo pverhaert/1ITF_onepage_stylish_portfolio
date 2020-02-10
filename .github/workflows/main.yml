@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   Deploy-To-Sinners:
-    name: Deploy-To-Sinners
+    name: Test HTML
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
