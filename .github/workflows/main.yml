@@ -9,6 +9,5 @@ jobs:
       - uses: actions/checkout@master
       - name: Validate HTML5
         uses: Cyb3r-Jak3/html5validator-action@v0.3
-        if: env.SKIP_VALIDATION == 'false'
         with:
           root: '${{env.LOCAL_DIR}}/'
